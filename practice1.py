@@ -3,7 +3,7 @@ def Exercise1():
 
 def Exercise2():
   name = input("Enter your name ")
-  print(f"Hello", {name})
+  print("Hello", name)
 
 def Exercise3():
   num1 = int(input("Enter the first number "))
@@ -26,7 +26,29 @@ def Exercise4():
  num1 = int(input(" How many games do you want to enter "))
  for n in range (num1):
    games.append(input(" Enter a game you liked to add to the list. "))
- print(games)
+ return games
 
-Exercise4()
+def Exercise5(list_of_games):
+  for game in list_of_games:
+    print(game, end = ', ')
 
+def Exercise6():
+  GameDict = {}  
+  ListOfGames = []
+  Quantity = int(input("How many games would you like to enter? "))
+  for n in range(Quantity):
+    GameDict[n] = [input("Enter the name of the game ")]
+    GameDict[n] += [input("Enter the genre of the game ")]
+    GameDict[n] += [float(input("Enter the rating of the game "))]
+  filter = input(print("Would you like to filter the list for any specific genre?"))
+  if filter == "Yes":
+   genrefilter = input("What genre would you like to filter by?")
+   for key, value in GameDict.items():
+    if(value[1] == genrefilter):
+     print(GameDict[key])
+  else:
+   print(GameDict)
+   
+Exercise6()
+   
+  
