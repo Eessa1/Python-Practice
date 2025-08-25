@@ -6,7 +6,6 @@ def Exercise2():
   name = input("Enter your name ")
   print("Hello", name)
 
-
 def Exercise3():
   num1 = int(input("Enter the first number "))
   num2 = int(input("Enter the second number "))
@@ -50,7 +49,6 @@ def Exercise6():
   else:
    print(GameDict)
       
-
 def Library():
  action = input("Welcome to the library what would you like to do today?\n You can add books, view all of our books or filter by author / genre\n Just Enter 'View', 'Add' or 'Filter").strip().lower()
  if action == "add":
@@ -72,7 +70,6 @@ def Library():
  else:
   print("Have a nice day!")
 
-
 def FilterBooks():
  filterChoice = input("What would you like to filter by genre or author? ").strip().lower()
  filterValue = input(f"Enter the {filterChoice} " ).strip().lower()
@@ -88,8 +85,5 @@ def AddBooks():
  }
  return BookDict
  
-
-
-Library()
     
   
