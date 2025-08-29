@@ -33,7 +33,8 @@ def AddBooks():
  Library()
 
 def ViewBooks():
- print(LibraryList)
+ for books in LibraryList:
+  print(f"{books['title'].title()} by {books['author'].title()}, {books['genre'].title()} rated {books['rating'].title()}")
  Library()
 
 def FilterBooks():
@@ -41,7 +42,7 @@ def FilterBooks():
  filterspecific = input("What is the " + filterchoice + " you would like to filter by").lower().strip()
  for book in LibraryList:
   if book[filterchoice] == filterspecific:
-   print(book)
+   print(f"{book['title'].title()} by {book['author'].title()}, {book['genre'].title()} rated {book['rating'].title()}")
  Library()   
 
 Library()
