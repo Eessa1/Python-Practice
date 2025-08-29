@@ -1,3 +1,4 @@
+import json
 BookList = []
 def Exercise1():
  print ("Hello World")
@@ -55,7 +56,7 @@ def Library():
   NewBook = AddBooks()
   BookList.append(NewBook)
  elif action == "view":
-  print(BookList)
+  ReadBooks()
  elif action == "filter":
   returnedFilter = FilterBooks()
   filterType = returnedFilter[0]
@@ -75,6 +76,10 @@ def FilterBooks():
  filterValue = input(f"Enter the {filterChoice} " ).strip().lower()
  return filterChoice, filterValue
 
+def ReadBooks():
+ with open ("LibraryStore.txt") as f:
+  print(f.read())
+
 def AddBooks():
  BookDict = {}
  Book = input("Enter the book name ")
@@ -83,7 +88,12 @@ def AddBooks():
   "genre": input("Enter the Genre ").strip().lower(),
   "year": int(input("Enter the Year "))
  }
+ with open("LibraryStore.txt", "a") as f: 
+  f.write(json.dumps(BookDict) + "\n" )
  return BookDict
  
+Library()
+# just gonna restart on a seperate file for the library.
+# no more updates on this file anymore
     
   

@@ -1,0 +1,56 @@
+[
+    {
+        "title": "dune",
+        "author": "frank herbert",
+        "genre": "scifi",
+        "rating": "5"
+    },
+    {
+        "title": "kafka on the shore",
+        "author": "haruki murakami",
+        "genre": "fantasy",
+        "rating": "4.5"
+    },
+    {
+        "title": "no longer human",
+        "author": "osamu dazai",
+        "genre": "novel",
+        "rating": "3"
+    },
+    {
+        "title": "the song of achilles",
+        "author": "madeline miller",
+        "genre": "fantasy",
+        "rating": "3.5"
+    },
+    {
+        "title": "the sailor who fell from grace with the sea",
+        "author": "yukio mishima",
+        "genre": "novel",
+        "rating": "2"
+    },
+    {
+        "title": "the epic of gilgamesh",
+        "author": "unknown",
+        "genre": "epic",
+        "rating": "3.75"
+    },
+    {
+        "title": "the odyssey",
+        "author": "homer",
+        "genre": "epic",
+        "rating": "5"
+    },
+    {
+        "title": "the iliad",
+        "author": "homer",
+        "genre": "epic",
+        "rating": "4"
+    },
+    {
+        "title": "the aeneid",
+        "author": "virgil",
+        "genre": "epic",
+        "rating": "4"
+    }
+]
