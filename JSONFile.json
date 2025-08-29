@@ -52,5 +52,65 @@
         "author": "virgil",
         "genre": "epic",
         "rating": "4"
+    },
+    {
+        "title": "dune messiah",
+        "author": "frank herbert",
+        "genre": "scifi",
+        "rating": "5"
+    },
+    {
+        "title": "children of dune",
+        "author": "frank herbert",
+        "genre": "scifi",
+        "rating": "4"
+    },
+    {
+        "title": "god emperor of dune",
+        "author": "frank herbert",
+        "genre": "scifi",
+        "rating": "5"
+    },
+    {
+        "title": "alexander child of a dream",
+        "author": "valerio manfredi",
+        "genre": "historical fiction",
+        "rating": "4"
+    },
+    {
+        "title": "the sands of ammon",
+        "author": "valerio manfredi",
+        "genre": "historical fiction",
+        "rating": "3"
+    },
+    {
+        "title": "meditations",
+        "author": "marcus aurelius",
+        "genre": "philosophy",
+        "rating": "3.75"
+    },
+    {
+        "title": "the ends of the earth",
+        "author": "valerio manfredi",
+        "genre": "historical fiction",
+        "rating": "4"
+    },
+    {
+        "title": "rubicon",
+        "author": "tom holland",
+        "genre": "history",
+        "rating": "4.5"
+    },
+    {
+        "title": "inglorious empire",
+        "author": "shashi tharoor",
+        "genre": "history",
+        "rating": "5"
+    },
+    {
+        "title": "animal farm",
+        "author": "george orwell",
+        "genre": "allegory",
+        "rating": "5"
     }
 ]
