@@ -25,7 +25,44 @@ def CheckIfWin():
  global GameOver
  x = 0
  y = 0
- if board[y][x] and board[y][x+1] and board[y][x+2] == 'X':
+ if board[y][x] == 'X' and board[y][x+1] == 'X' and board[y][x+2] == 'X':
+  GameOver = True
+ if board[y][x] == 'O' and board[y][x+1] == 'O' and board[y][x+2] == 'O':
+  GameOver = True
+
+ if board[y][x] == 'X' and board[y+1][x] == 'X' and board[y+2][x] == 'X':
+  GameOver = True
+ if board[y][x] == 'O' and board[y+1][x] == 'O' and board[y+2][x] == 'O':
+  GameOver = True
+
+ if board[y+1][x] == 'X' and board[y+1][x+1] == 'X' and board[y+1][x+2] == 'X':
+  GameOver = True
+ if board[y+1][x] == 'O' and board[y+1][x+1] == 'O' and board[y+1][x+2] == 'O':
+  GameOver = True
+
+ if board[y+2][x] == 'X' and board[y+2][x+1] == 'X' and board[y+2][x+2] == 'X':
+  GameOver = True
+ if board[y+2][x] == 'O' and board[y+2][x+1] == 'O' and board[y+2][x+2] == 'O':
+  GameOver = True
+
+ if board[y][x+1] == 'X' and board[y+1][x+1] == 'X' and board[y+2][x+1] == 'X':
+  GameOver = True
+ if board[y][x+1] == 'O' and board[y+1][x+1] == 'O' and board[y+2][x+1] == 'O':
+  GameOver = True
+
+ if board[y][x+2] == 'X' and board[y+1][x+2] == 'X' and board[y+2][x+2] == 'X':
+  GameOver = True
+ if board[y][x+2] == 'O' and board[y+1][x+2] == 'O' and board[y+2][x+2] == 'O':
+  GameOver = True
+
+ if board[y][x] == 'X' and board[y+1][x+1] == 'X' and board[y+2][x+2] == 'X':
+  GameOver = True
+ if board[y][x] == 'O' and board[y+1][x+1] == 'O' and board[y+2][x+2] == 'O':
+  GameOver = True
+
+ if board[y][x+2] == 'X' and board[y+1][x+1] == 'X' and board[y+2][x] == 'X':
+  GameOver = True
+ if board[y][x+2] == 'O' and board[y+1][x+1] == 'O' and board[y+2][x] == 'O':
   GameOver = True
  
 def GetUserInput():
