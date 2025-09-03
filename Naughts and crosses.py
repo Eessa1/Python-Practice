@@ -1,3 +1,5 @@
+import random 
+
 def boardsetup():
  boardSet = [
  [" ", " ", " "],
@@ -9,13 +11,18 @@ def boardsetup():
  return boardSet
 
 def Game():
+ global PlayersTurn
  global GameOver
  while GameOver == False:
   global board
   if board == []:
     board = boardsetup()
-  inputx, inputy = GetUserInput()
-  board[inputy-1][inputx-1] = "X"
+  if PlayersTurn == True:
+   inputx, inputy = GetUserInput()
+   board[inputy-1][inputx-1] = "X"
+  elif PlayersTurn == False:
+   AiInputX, AiInputY = AiTurn()
+   board[AiInputY][AiInputX] = "O"
   for row in board:
     print(" | ".join(row))
   CheckIfWin()
@@ -65,13 +72,27 @@ def CheckIfWin():
  if board[y][x+2] == 'O' and board[y+1][x+1] == 'O' and board[y+2][x] == 'O':
   GameOver = True
  
+def AiTurn():
+ global board
+ global PlayersTurn
+ AiY = random.randint(0,2)
+ AiX = random.randint(0,2)
+ while board[AiY][AiX] != " ":
+  AiY = random.randint(0,2)
+  AiX = random.randint(0,2)
+ PlayersTurn = True 
+ return AiX,AiY
 def GetUserInput():
+ global PlayersTurn
  YValue = int(input("Enter the row 1-3 "))
  XValue = int(input("Enter the column 1-3 "))
+ PlayersTurn = False
  return XValue,YValue
 
+PlayersTurn = True
 GameOver= False
 board = []
 PlayerTurn = True
-AiTurn = False
 Game()
+
+
