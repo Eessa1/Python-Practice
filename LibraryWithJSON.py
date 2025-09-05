@@ -7,7 +7,7 @@ if os.path.exists("JSONFILE.json"):
   LibraryList = json.load(file)
 
 def Library():
- WelcomeChoice = input("What would you like to do today?\n Commands: Add, View, Filter").lower()
+ WelcomeChoice = input("What would you like to do today?\n Commands: Add, View, Filter ").lower()
  if WelcomeChoice == "add":
   AddBooks()
  elif WelcomeChoice == "view":
