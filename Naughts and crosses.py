@@ -105,15 +105,27 @@ def GameState():
    GameOver = True
    Result = "Draw"
 
-
+def miniMax():
+ global board
+ global Result
+ if GameOver:
+  if Result == "Ai":
+   return +1
+  if Result =="Player":
+   return -1
+  if Result == "Draw":
+   return 0
+  
 def AiTurn():
  global board
  global PlayersTurn
- AiY = random.randint(0,2)
- AiX = random.randint(0,2)
- while board[AiY][AiX] != " ":
-  AiY = random.randint(0,2)
-  AiX = random.randint(0,2)
+ for row in board:
+  for cell in row:
+   if cell == " ":
+    cell = "O"
+    moveWorth = miniMax()
+    if moveWorth <= 0:
+     cell = " "
  PlayersTurn = True 
  return AiX,AiY
 
