@@ -108,6 +108,7 @@ def GameState():
 def miniMax():
  global board
  global Result
+ global Maximising
  if GameOver:
   if Result == "Ai":
    return +1
@@ -115,19 +116,25 @@ def miniMax():
    return -1
   if Result == "Draw":
    return 0
-  
+ for y, row in enumerate(board):
+  for x, cell in enumerate(row):
+   if cell == " ":
+    if Maximising == True:
+     board[y][x] = "O"
+
+    if Maximising == False:
+     board[y][x] = "X"
+    Maximising = not Maximising
+
+
+    
+
+
 def AiTurn():
  global board
  global PlayersTurn
- for row in board:
-  for cell in row:
-   if cell == " ":
-    cell = "O"
-    moveWorth = miniMax()
-    if moveWorth <= 0:
-     cell = " "
+ moveWorth = miniMax()
  PlayersTurn = True 
- return AiX,AiY
 
 def GetUserInput():
  global PlayersTurn
@@ -136,6 +143,7 @@ def GetUserInput():
  PlayersTurn = False
  return XValue,YValue
 
+Maximising = True
 PlayersTurn = True
 GameOver= False
 board = []
