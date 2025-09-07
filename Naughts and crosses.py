@@ -1,4 +1,4 @@
-import random 
+import math
 
 def boardsetup():
  boardSet = [
@@ -22,7 +22,7 @@ def Game():
    inputx, inputy = GetUserInput()
    board[inputy-1][inputx-1] = "X"
   elif PlayersTurn == False:
-   AiInputX, AiInputY = AiTurn()
+   AiInputX, AiInputY = AiTurn(board)
    board[AiInputY][AiInputX] = "O"
   for row in board:
     print(" | ".join(row))
@@ -92,6 +92,57 @@ def CheckIfWin():
   GameOver = True
   Result = "Ai"
  
+def CheckHypotheticalWin(board):
+ 
+ x = 0
+ y = 0
+ if board[y][x] == 'X' and board[y][x+1] == 'X' and board[y][x+2] == 'X':
+  return "Player"
+ if board[y][x] == 'O' and board[y][x+1] == 'O' and board[y][x+2] == 'O':
+  return "Ai"
+
+ if board[y][x] == 'X' and board[y+1][x] == 'X' and board[y+2][x] == 'X':
+  return "Player"
+ if board[y][x] == 'O' and board[y+1][x] == 'O' and board[y+2][x] == 'O':
+  return "Ai"
+
+ if board[y+1][x] == 'X' and board[y+1][x+1] == 'X' and board[y+1][x+2] == 'X':
+  return "Player"
+ if board[y+1][x] == 'O' and board[y+1][x+1] == 'O' and board[y+1][x+2] == 'O':
+  return "Ai"
+
+ if board[y+2][x] == 'X' and board[y+2][x+1] == 'X' and board[y+2][x+2] == 'X':
+  return "Player"
+ if board[y+2][x] == 'O' and board[y+2][x+1] == 'O' and board[y+2][x+2] == 'O':
+  return "Ai"
+
+ if board[y][x+1] == 'X' and board[y+1][x+1] == 'X' and board[y+2][x+1] == 'X':
+  return "Player"
+ if board[y][x+1] == 'O' and board[y+1][x+1] == 'O' and board[y+2][x+1] == 'O':
+  return "Ai"
+
+ if board[y][x+2] == 'X' and board[y+1][x+2] == 'X' and board[y+2][x+2] == 'X':
+  return "Player"
+ if board[y][x+2] == 'O' and board[y+1][x+2] == 'O' and board[y+2][x+2] == 'O':
+  return "Ai"
+
+ if board[y][x] == 'X' and board[y+1][x+1] == 'X' and board[y+2][x+2] == 'X':
+  return "Player"
+ if board[y][x] == 'O' and board[y+1][x+1] == 'O' and board[y+2][x+2] == 'O':
+  return "Ai"
+
+ if board[y][x+2] == 'X' and board[y+1][x+1] == 'X' and board[y+2][x] == 'X':
+  return "Player"
+ if board[y][x+2] == 'O' and board[y+1][x+1] == 'O' and board[y+2][x] == 'O':
+  return "Ai"
+ 
+ for row in board:
+  for cell in row:
+   if cell == " ":
+    return None
+   
+ return "Draw"
+
 def GameState():
  global Result
  global board
@@ -105,36 +156,50 @@ def GameState():
    GameOver = True
    Result = "Draw"
 
-def miniMax():
- global board
- global Result
- global Maximising
- if GameOver:
-  if Result == "Ai":
+def miniMax(isMaximising):
+ FutureWinner = CheckHypotheticalWin(board)
+ if FutureWinner == "Ai":
    return +1
-  if Result =="Player":
+ if FutureWinner =="Player":
    return -1
-  if Result == "Draw":
+ if FutureWinner == "Draw":
    return 0
+  
+ if isMaximising:
+    BestScore = -math.inf
+    for y, row in enumerate(board):
+      for x, cell in enumerate(row):
+        if cell == " ":
+          board[y][x] = "O"
+          Score = miniMax(False)
+          board[y][x] = " "
+          BestScore = max(Score, BestScore)
+    return BestScore
+ else:
+    BestScore = math.inf
+    for y, row in enumerate(board):
+     for x, cell in enumerate(row):
+        if cell == " ":
+          board[y][x] = "X"
+          Score = miniMax(True)
+          board[y][x] = " "
+          BestScore = min(Score, BestScore)
+    return BestScore
+
+def AiTurn(board):
+ global PlayersTurn
+ BestScore = -math.inf
  for y, row in enumerate(board):
   for x, cell in enumerate(row):
    if cell == " ":
-    if Maximising == True:
-     board[y][x] = "O"
-
-    if Maximising == False:
-     board[y][x] = "X"
-    Maximising = not Maximising
-
-
-    
-
-
-def AiTurn():
- global board
- global PlayersTurn
- moveWorth = miniMax()
+    board[y][x] = "O"
+    Score = miniMax(False)
+    board[y][x] = " "
+    if Score> BestScore:
+     BestScore = Score
+     BestMove = (x,y)   
  PlayersTurn = True 
+ return BestMove
 
 def GetUserInput():
  global PlayersTurn
@@ -143,7 +208,6 @@ def GetUserInput():
  PlayersTurn = False
  return XValue,YValue
 
-Maximising = True
 PlayersTurn = True
 GameOver= False
 board = []
