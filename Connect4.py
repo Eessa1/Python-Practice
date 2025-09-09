@@ -1,0 +1,1 @@
+print("yo ill start ts tomorrow im tired")
