@@ -1,5 +1,5 @@
 def Add():
-    task = input("Enter task")
+    task = input("Enter task").strip()
     file = open('file.txt', mode = 'a')
     file.write(task + '\n')
     file.close()
