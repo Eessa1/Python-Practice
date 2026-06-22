@@ -11,8 +11,8 @@ plt.xlabel("Size (sqm)")
 plt.ylabel("Price (£k)")
 plt.title("House Prices")
 plt.show()
-m = 3
-c = 10
+m = 3.1
+c = 5
 predicted = m* sizes + c
 errors = predicted - prices
 rmse = np.sqrt(np.mean(errors**2))
