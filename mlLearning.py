@@ -1,24 +1,14 @@
-import numpy as np
-import matplotlib.pyplot as plt
-
-#  house data
-sizes =  np.array([50, 60, 70, 80, 90, 100])
-prices = np.array([140, 195, 200, 260, 280, 310])
-
-# plot 
-plt.scatter(sizes, prices)
-plt.xlabel("Size (sqm)")
-plt.ylabel("Price (£k)")
-plt.title("House prices")
-plt.show()
-m = 3.1
-c = 5
-predicted = m* sizes + c
-errors = predicted - prices
-rmse = np.sqrt(np.mean(errors**2))
-print ("RMSE:", rmse)
-plt.scatter(sizes,prices, label = "real")
-plt.plot(sizes, predicted, color = 'red', label="prediction")
-plt.legend()
-plt.show()
-
+from pathlib import Path
+import pandas as pd
+import tarfile
+import urllib.request
+def load_housing_data():
+ tarball_path = Path("datasets/housing.tgz")
+ if not tarball_path.is_file():
+ Path("datasets").mkdir(parents=True, exist_ok=True)
+ url = "https://github.com/ageron/data/raw/main/housing.tgz"
+ urllib.request.urlretrieve(url, tarball_path)
+ with tarfile.open(tarball_path) as housing_tarball:
+ housing_tarball.extractall(path="datasets")
+ return pd.read_csv(Path("datasets/housing/housing.csv"))
+housing_full = load_housing_data()
