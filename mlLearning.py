@@ -15,4 +15,3 @@ def load_housing_data():
 
 housing_full = load_housing_data()
 print(housing_full.head())
-## continue soon
