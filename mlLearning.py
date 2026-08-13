@@ -4,6 +4,7 @@ import tarfile
 import urllib.request
 import matplotlib.pyplot as plt
 import numpy as np
+from sklearn.model_selection import train_test_split
 
 def load_housing_data():
     tarball_path = Path("datasets/housing.tgz")
@@ -16,15 +17,8 @@ def load_housing_data():
     return pd.read_csv(Path("datasets/housing/housing.csv"))
 
 housing_full = load_housing_data()
-
-def shuffle_and_split(data,test_ratio, rng):
-    shuffled_indices = rng.permutation(len(data))
-    test_set_size = int(len(data) * test_ratio)
-    test_indices = shuffled_indices[:test_set_size]
-    train_indices = shuffled_indices[test_set_size:]
-    return data.iloc[train_indices], data.iloc[test_indices]
-
-rng = np.random.default_rng()
-train_set, test_set = shuffle_and_split(housing_full,0.2,rng)
+train_set, test_set = train_test_split(housing_full,test_size=0.2,random_state=42)
 print(len(train_set))
 print(len(test_set))
+
+
