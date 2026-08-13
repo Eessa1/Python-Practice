@@ -23,4 +23,8 @@ def shuffle_and_split(data,test_ratio, rng):
     test_indices = shuffled_indices[:test_set_size]
     train_indices = shuffled_indices[test_set_size:]
     return data.iloc[train_indices], data.iloc[test_indices]
-##h
+
+rng = np.random.default_rng()
+train_set, test_set = shuffle_and_split(housing_full,0.2,rng)
+print(len(train_set))
+print(len(test_set))
