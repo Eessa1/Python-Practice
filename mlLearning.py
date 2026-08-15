@@ -21,4 +21,4 @@ train_set, test_set = train_test_split(housing_full,test_size=0.2,random_state=4
 print(len(train_set))
 print(len(test_set))
 
-
+##hi
