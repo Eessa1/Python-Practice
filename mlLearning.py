@@ -5,6 +5,7 @@ import urllib.request
 import matplotlib.pyplot as plt
 import numpy as np
 from sklearn.model_selection import train_test_split
+from sklearn.model_selection import StratifiedShuffleSplit
 
 def load_housing_data():
     tarball_path = Path("datasets/housing.tgz")
@@ -27,3 +28,7 @@ cat_p.plot.bar(rot=0, grid = True)
 plt.xlabel ("income categories")
 plt.ylabel ("Number of districts")
 plt.show()
+
+strat_train_set, strat_test_set = train_test_split(housing_full, test_size=0.2,stratify= housing_full["income_cat"],random_state=42 )
+print(strat_test_set["income_cat"].value_counts()/len(strat_test_set))
+print(housing_full["income_cat"].value_counts()/len(housing_full))
