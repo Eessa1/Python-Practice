@@ -18,7 +18,12 @@ def load_housing_data():
     return pd.read_csv(Path("datasets/housing/housing.csv"))
 
 housing_full = load_housing_data()
-train_set, test_set = train_test_split(housing_full,test_size=0.2,random_state=42)
-print(len(train_set))
-print(len(test_set))
+housing_full["income_cat"] = pd.cut(housing_full["median_income"], bins = [0.,1.5,3.0,4.5,6.,np.inf], labels = [1,2,3,4,5])
+strat_train_set, strat_test_set = train_test_split(housing_full, test_size=0.2,stratify= housing_full["income_cat"],random_state=42 )
+for set_ in (strat_train_set, strat_test_set):
+    set_.drop("income_cat", axis=1,inplace =True)
 
+housing = strat_train_set.copy()
+housing.plot(kind="scatter", x="longitude", y="latitude", grid=True, s=housing["population"] / 100, label="population", c="median_house_value", cmap="jet", colorbar=True,
+ legend=True, sharex=False, figsize=(10, 7))
+plt.show()
