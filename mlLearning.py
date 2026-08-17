@@ -22,13 +22,3 @@ train_set, test_set = train_test_split(housing_full,test_size=0.2,random_state=4
 print(len(train_set))
 print(len(test_set))
 
-housing_full["income_cat"] = pd.cut(housing_full["median_income"], bins = [0.,1.5,3.0,4.5,6.,np.inf], labels = [1,2,3,4,5])
-cat_p = housing_full["income_cat"].value_counts().sort_index()
-cat_p.plot.bar(rot=0, grid = True)
-plt.xlabel ("income categories")
-plt.ylabel ("Number of districts")
-plt.show()
-
-strat_train_set, strat_test_set = train_test_split(housing_full, test_size=0.2,stratify= housing_full["income_cat"],random_state=42 )
-print(strat_test_set["income_cat"].value_counts()/len(strat_test_set))
-print(housing_full["income_cat"].value_counts()/len(housing_full))
