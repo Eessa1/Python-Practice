@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.model_selection import StratifiedShuffleSplit
+from pandas.plotting import scatter_matrix
 
 def load_housing_data():
     tarball_path = Path("datasets/housing.tgz")
@@ -24,6 +25,8 @@ for set_ in (strat_train_set, strat_test_set):
     set_.drop("income_cat", axis=1,inplace =True)
 
 housing = strat_train_set.copy()
-housing.plot(kind="scatter", x="longitude", y="latitude", grid=True, s=housing["population"] / 100, label="population", c="median_house_value", cmap="jet", colorbar=True,
- legend=True, sharex=False, figsize=(10, 7))
-plt.show()
+housing["rooms_per_house"] = housing["total_rooms"] /housing["households"]
+housing["bedrooms_ratio"] = housing["total_bedrooms"] /housing["total_rooms"]
+housing["people_per_house"] = housing["population"] /housing["households"]
+corr_matrix = housing.corr(numeric_only=True)
+print(corr_matrix["median_house_value"].sort_values(ascending=False))
