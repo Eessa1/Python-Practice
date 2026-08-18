@@ -24,9 +24,5 @@ strat_train_set, strat_test_set = train_test_split(housing_full, test_size=0.2,s
 for set_ in (strat_train_set, strat_test_set):
     set_.drop("income_cat", axis=1,inplace =True)
 
-housing = strat_train_set.copy()
-housing["rooms_per_house"] = housing["total_rooms"] /housing["households"]
-housing["bedrooms_ratio"] = housing["total_bedrooms"] /housing["total_rooms"]
-housing["people_per_house"] = housing["population"] /housing["households"]
-corr_matrix = housing.corr(numeric_only=True)
-print(corr_matrix["median_house_value"].sort_values(ascending=False))
+housing = strat_train_set.drop("median_house_value", axis = 1)
+housing_labels = strat_train_set["median_house_vales"].copy()
