@@ -7,7 +7,9 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.model_selection import StratifiedShuffleSplit
 from pandas.plotting import scatter_matrix
+from sklearn.impute import SimpleImputer
 
+imputer = SimpleImputer(strategy="median")
 def load_housing_data():
     tarball_path = Path("datasets/housing.tgz")
     if not tarball_path.is_file():
@@ -25,4 +27,9 @@ for set_ in (strat_train_set, strat_test_set):
     set_.drop("income_cat", axis=1,inplace =True)
 
 housing = strat_train_set.drop("median_house_value", axis = 1)
-housing_labels = strat_train_set["median_house_vales"].copy()
+housing_labels = strat_train_set["median_house_value"].copy()
+median = housing["total_bedrooms"].median()
+housing["total_bedrooms"] = housing["total_bedrooms"].fillna(median)
+housing_num = housing.select_dtypes(include=[np.number])
+imputer.fit(housing_num)
+print(imputer.statistics_)
