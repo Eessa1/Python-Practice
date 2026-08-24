@@ -5,10 +5,12 @@ import urllib.request
 import matplotlib.pyplot as plt
 import numpy as np
 from sklearn.model_selection import train_test_split
-from sklearn.model_selection import StratifiedShuffleSplit
 from pandas.plotting import scatter_matrix
 from sklearn.impute import SimpleImputer
+from sklearn.preprocessing import OrdinalEncoder
+from sklearn.preprocessing import OneHotEncoder
 
+cat_encoder = OneHotEncoder(drop="first")
 imputer = SimpleImputer(strategy="median")
 def load_housing_data():
     tarball_path = Path("datasets/housing.tgz")
@@ -28,8 +30,9 @@ for set_ in (strat_train_set, strat_test_set):
 
 housing = strat_train_set.drop("median_house_value", axis = 1)
 housing_labels = strat_train_set["median_house_value"].copy()
-median = housing["total_bedrooms"].median()
-housing["total_bedrooms"] = housing["total_bedrooms"].fillna(median)
 housing_num = housing.select_dtypes(include=[np.number])
 imputer.fit(housing_num)
 X = imputer.transform(housing_num)
+housing_cat = housing[["ocean_proximity"]]
+housing_cat_1hot = cat_encoder.fit_transform(housing_cat)
+print(housing_cat_1hot)
