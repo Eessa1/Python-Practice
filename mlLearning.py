@@ -10,7 +10,7 @@ from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import OrdinalEncoder
 from sklearn.preprocessing import OneHotEncoder
 
-cat_encoder = OneHotEncoder(drop="first")
+cat_encoder = OneHotEncoder()
 imputer = SimpleImputer(strategy="median")
 def load_housing_data():
     tarball_path = Path("datasets/housing.tgz")
