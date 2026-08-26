@@ -36,4 +36,3 @@ X = imputer.transform(housing_num)
 housing_cat = housing[["ocean_proximity"]]
 housing_cat_1hot = cat_encoder.fit_transform(housing_cat)
 print(housing_cat_1hot)
-##hi
