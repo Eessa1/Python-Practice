@@ -9,7 +9,9 @@ from pandas.plotting import scatter_matrix
 from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import OrdinalEncoder
 from sklearn.preprocessing import OneHotEncoder
+from sklearn.preprocessing import MinMaxScaler
 
+min_max_scaler = MinMaxScaler(feature_range=(-1,1))
 cat_encoder = OneHotEncoder()
 imputer = SimpleImputer(strategy="median")
 def load_housing_data():
@@ -35,6 +37,6 @@ imputer.fit(housing_num)
 X = imputer.transform(housing_num)
 housing_cat = housing[["ocean_proximity"]]
 housing_cat_1hot = cat_encoder.fit_transform(housing_cat)
-print(housing_cat_1hot)
+df2 = pd.DataFrame(min_max_scaler.fit_transform(housing_num))
+print(df2.head())
 
-##tmw
