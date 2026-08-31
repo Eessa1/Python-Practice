@@ -11,6 +11,7 @@ from sklearn.preprocessing import OrdinalEncoder
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.preprocessing import StandardScaler
+from sklearn.metrics.pairwise import rbf_kernel
 
 std_scaler = StandardScaler()
 min_max_scaler = MinMaxScaler(feature_range=(-1,1))
@@ -41,4 +42,6 @@ housing_cat = housing[["ocean_proximity"]]
 housing_cat_1hot = cat_encoder.fit_transform(housing_cat)
 housing_num_min_max_scaled = min_max_scaler.fit_transform(housing_num)
 housing_num_std_scaled = std_scaler.fit_transform(housing_num)
+age_simil_35= rbf_kernel(housing[["housing_median_age"]],[[35]],gamma=0.1)
+
 
