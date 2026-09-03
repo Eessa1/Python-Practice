@@ -13,6 +13,8 @@ from sklearn.preprocessing import MinMaxScaler
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics.pairwise import rbf_kernel
 from sklearn.linear_model import LinearRegression
+from sklearn.compose import TransformedTargetRegressor
+
 
 target_scaler = StandardScaler()
 std_scaler = StandardScaler()
