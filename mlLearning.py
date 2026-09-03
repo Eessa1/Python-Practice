@@ -46,8 +46,9 @@ housing_num_min_max_scaled = min_max_scaler.fit_transform(housing_num)
 housing_num_std_scaled = std_scaler.fit_transform(housing_num)
 age_simil_35= rbf_kernel(housing[["housing_median_age"]],[[35]],gamma=0.1)
 scaled_labels = target_scaler.fit_transform(housing_labels.to_frame())
-model = LinearRegression
+model = LinearRegression()
 model.fit(housing[["median_income"]], scaled_labels)
 some_new_data = housing[["median_income"]].iloc[:5]
 scaled_predictions = model.predict(some_new_data)
 predictions = target_scaler.inverse_transform(scaled_predictions)
+print(predictions)
