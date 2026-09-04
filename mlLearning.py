@@ -14,8 +14,10 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.metrics.pairwise import rbf_kernel
 from sklearn.linear_model import LinearRegression
 from sklearn.compose import TransformedTargetRegressor
+from sklearn.preprocessing import FunctionTransformer
 
 
+log_transformer = FunctionTransformer(np.log,inverse_func=np.exp)
 target_scaler = StandardScaler()
 std_scaler = StandardScaler()
 min_max_scaler = MinMaxScaler(feature_range=(-1,1))
@@ -51,4 +53,4 @@ model = TransformedTargetRegressor(LinearRegression(),transformer=StandardScaler
 model.fit(housing[["median_income"]],housing_labels)
 data = housing[["median_income"]].iloc[:5]
 predictions = model.predict(data)
-print(predictions)
+log_pop = log_transformer.transform(housing[["population"]])
