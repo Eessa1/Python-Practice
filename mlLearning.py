@@ -15,7 +15,7 @@ from sklearn.metrics.pairwise import rbf_kernel
 from sklearn.linear_model import LinearRegression
 from sklearn.compose import TransformedTargetRegressor
 from sklearn.preprocessing import FunctionTransformer
-
+from sklearn.pipeline import Pipeline
 
 log_transformer = FunctionTransformer(np.log,inverse_func=np.exp)
 target_scaler = StandardScaler()
@@ -23,6 +23,7 @@ std_scaler = StandardScaler()
 min_max_scaler = MinMaxScaler(feature_range=(-1,1))
 cat_encoder = OneHotEncoder()
 imputer = SimpleImputer(strategy="median")
+num_pipeline = Pipeline([("impute", SimpleImputer(strategy="median")),("standardize", StandardScaler())])
 def load_housing_data():
     tarball_path = Path("datasets/housing.tgz")
     if not tarball_path.is_file():
@@ -54,3 +55,6 @@ model.fit(housing[["median_income"]],housing_labels)
 data = housing[["median_income"]].iloc[:5]
 predictions = model.predict(data)
 log_pop = log_transformer.transform(housing[["population"]])
+housing_num_prepared = num_pipeline.fit_transform(housing_num)
+df_housing_num_prepared = pd.DataFrame(housing_num_prepared, columns= num_pipeline.get_feature_names_out(), index= housing_num.index)
+print(df_housing_num_prepared)
