@@ -7,23 +7,22 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 from pandas.plotting import scatter_matrix
 from sklearn.impute import SimpleImputer
-from sklearn.preprocessing import OrdinalEncoder
-from sklearn.preprocessing import OneHotEncoder
-from sklearn.preprocessing import MinMaxScaler
-from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from sklearn.metrics.pairwise import rbf_kernel
 from sklearn.linear_model import LinearRegression
 from sklearn.compose import TransformedTargetRegressor
 from sklearn.preprocessing import FunctionTransformer
-from sklearn.pipeline import Pipeline
+from sklearn.pipeline import Pipeline, make_pipeline
+from sklearn.compose import ColumnTransformer,make_column_selector
 
+cat_pipeline = make_pipeline(SimpleImputer(strategy="most_frequent"),OneHotEncoder(handle_unknown="ignore"))
 log_transformer = FunctionTransformer(np.log,inverse_func=np.exp)
 target_scaler = StandardScaler()
 std_scaler = StandardScaler()
-min_max_scaler = MinMaxScaler(feature_range=(-1,1))
 cat_encoder = OneHotEncoder()
 imputer = SimpleImputer(strategy="median")
 num_pipeline = Pipeline([("impute", SimpleImputer(strategy="median")),("standardize", StandardScaler())])
+preprocessing = ColumnTransformer([("num",num_pipeline, make_column_selector(dtype_include=np.number)),("cat",cat_pipeline,make_column_selector(dtype_include=object))])
 def load_housing_data():
     tarball_path = Path("datasets/housing.tgz")
     if not tarball_path.is_file():
@@ -47,7 +46,6 @@ imputer.fit(housing_num)
 X = imputer.transform(housing_num)
 housing_cat = housing[["ocean_proximity"]]
 housing_cat_1hot = cat_encoder.fit_transform(housing_cat)
-housing_num_min_max_scaled = min_max_scaler.fit_transform(housing_num)
 housing_num_std_scaled = std_scaler.fit_transform(housing_num)
 age_simil_35= rbf_kernel(housing[["housing_median_age"]],[[35]],gamma=0.1)
 model = TransformedTargetRegressor(LinearRegression(),transformer=StandardScaler())
@@ -55,6 +53,6 @@ model.fit(housing[["median_income"]],housing_labels)
 data = housing[["median_income"]].iloc[:5]
 predictions = model.predict(data)
 log_pop = log_transformer.transform(housing[["population"]])
-housing_num_prepared = num_pipeline.fit_transform(housing_num)
-df_housing_num_prepared = pd.DataFrame(housing_num_prepared, columns= num_pipeline.get_feature_names_out(), index= housing_num.index)
-print(df_housing_num_prepared)
+housing_prepared = preprocessing.fit_transform(housing)
+df_hp = pd.DataFrame(housing_prepared, columns = preprocessing.get_feature_names_out(), index= housing.index)
+print(df_hp)
