@@ -56,3 +56,4 @@ log_pop = log_transformer.transform(housing[["population"]])
 housing_prepared = preprocessing.fit_transform(housing)
 df_hp = pd.DataFrame(housing_prepared, columns = preprocessing.get_feature_names_out(), index= housing.index)
 print(df_hp)
+#larp
