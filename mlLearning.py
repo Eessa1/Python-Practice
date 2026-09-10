@@ -14,7 +14,22 @@ from sklearn.compose import TransformedTargetRegressor
 from sklearn.preprocessing import FunctionTransformer
 from sklearn.pipeline import Pipeline, make_pipeline
 from sklearn.compose import ColumnTransformer,make_column_selector
+from sklearn.cluster import KMeans
+from sklearn.base import BaseEstimator,TransformerMixin
 
+class ClusterSimilarity(BaseEstimator,TransformerMixin):
+    def __init__(self,n_clusters = 10, gamma = 1.0, random_state=None):
+        self.n_clusters = n_clusters
+        self.gamma = gamma
+        self.random_state = random_state
+    def fit(self,X, y= None, sample_weight = None):
+        self.kmeans = KMeans(self.n_clusters,random_state= self.random_state)
+        self.kmeans_.fit(X, sample_weight= sample_weight)
+        return self
+    def transform(self,X):
+        return rbf_kernel(X,self.kmeans_.cluster_centers_,gamma=self.gamma)
+    def get_feature_names_out(self,names = None):
+        return [f"Cluster {i} similarity" for i in range(self.n_clusters)]
 cat_pipeline = make_pipeline(SimpleImputer(strategy="most_frequent"),OneHotEncoder(handle_unknown="ignore"))
 log_transformer = FunctionTransformer(np.log,inverse_func=np.exp)
 target_scaler = StandardScaler()
@@ -55,5 +70,5 @@ predictions = model.predict(data)
 log_pop = log_transformer.transform(housing[["population"]])
 housing_prepared = preprocessing.fit_transform(housing)
 df_hp = pd.DataFrame(housing_prepared, columns = preprocessing.get_feature_names_out(), index= housing.index)
-print(df_hp)
-#larp
+cluster_simil = ClusterSimilarity(n_clusters= 10, gamma = 1, random_state=42)
+similarities = cluster_simil.fit_transform(housing[["latitude","longitude"]],sample_weight=housing_labels)
