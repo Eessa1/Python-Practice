@@ -85,4 +85,4 @@ data = housing[["median_income"]].iloc[:5]
 predictions = model.predict(data)
 log_pop = log_transformer.transform(housing[["population"]])
 similarities = cluster_simil.fit_transform(housing[["latitude","longitude"]],sample_weight=housing_labels)
-
+##larp
