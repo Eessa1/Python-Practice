@@ -16,6 +16,7 @@ from sklearn.pipeline import Pipeline, make_pipeline
 from sklearn.compose import ColumnTransformer,make_column_selector
 from sklearn.cluster import KMeans
 from sklearn.base import BaseEstimator,TransformerMixin
+from sklearn.metrics import root_mean_squared_error
 
 class ClusterSimilarity(BaseEstimator,TransformerMixin):
     def __init__(self,n_clusters = 10, gamma = 1.0, random_state=None):
@@ -85,4 +86,8 @@ data = housing[["median_income"]].iloc[:5]
 predictions = model.predict(data)
 log_pop = log_transformer.transform(housing[["population"]])
 similarities = cluster_simil.fit_transform(housing[["latitude","longitude"]],sample_weight=housing_labels)
-##larp
+lin_reg = make_pipeline(preprocessing,LinearRegression())
+lin_reg.fit(housing,housing_labels)
+housing_predictions =  lin_reg.predict(housing)
+lin_rmse = root_mean_squared_error(housing_labels,housing_predictions)
+print(lin_rmse)
