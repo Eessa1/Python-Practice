@@ -17,6 +17,7 @@ from sklearn.compose import ColumnTransformer,make_column_selector
 from sklearn.cluster import KMeans
 from sklearn.base import BaseEstimator,TransformerMixin
 from sklearn.metrics import root_mean_squared_error
+from sklearn.tree import DecisionTreeRegressor
 
 class ClusterSimilarity(BaseEstimator,TransformerMixin):
     def __init__(self,n_clusters = 10, gamma = 1.0, random_state=None):
