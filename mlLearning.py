@@ -4,7 +4,7 @@ import tarfile
 import urllib.request
 import matplotlib.pyplot as plt
 import numpy as np
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split, cross_val_score
 from pandas.plotting import scatter_matrix
 from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
@@ -18,6 +18,7 @@ from sklearn.cluster import KMeans
 from sklearn.base import BaseEstimator,TransformerMixin
 from sklearn.metrics import root_mean_squared_error
 from sklearn.tree import DecisionTreeRegressor
+from sklearn.ensemble import RandomForestRegressor
 
 class ClusterSimilarity(BaseEstimator,TransformerMixin):
     def __init__(self,n_clusters = 10, gamma = 1.0, random_state=None):
@@ -87,7 +88,7 @@ data = housing[["median_income"]].iloc[:5]
 predictions = model.predict(data)
 log_pop = log_transformer.transform(housing[["population"]])
 similarities = cluster_simil.fit_transform(housing[["latitude","longitude"]],sample_weight=housing_labels)
-tree_reg = make_pipeline(preprocessing,DecisionTreeRegressor(random_state=42))
-tree_reg.fit(housing,housing_labels)
-housing_predictions =  tree_reg.predict(housing)
-tree_rmse = root_mean_squared_error(housing_labels, housing_predictions)
+forest_reg = make_pipeline(preprocessing,RandomForestRegressor(random_state=42))
+forest_rmse = -cross_val_score(forest_reg,housing,housing_labels,scoring="neg_root_mean_squared_error",cv=10)
+print(pd.Series(forest_rmse).describe())
+print("hi")
