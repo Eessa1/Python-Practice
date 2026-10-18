@@ -1,5 +1,7 @@
-import matplotlib.pyplot as plt
-import numpy as np
+from scipy import stats
 
-X = np.array([[10,2],[20,4],[30,5]])
-print(X[:,[0]] / X[:,[1]])
+group_a = [23,25,28,30,22,27,26]
+group_b = [30,33,29,35,31,34,32]
+
+t_stat, p_value = stats.ttest_ind(group_a,group_b)
+print(p_value)
