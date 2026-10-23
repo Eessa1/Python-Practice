@@ -1,8 +1,16 @@
 from scipy import stats
+import pandas as pd
+from sklearn.impute import SimpleImputer
 
-group_a = [23,25,28,30,22,27,26]
-group_b = [29,33,34,36,26,30,33]
-
-t_stat, p_value = stats.ttest_ind(group_a,group_b)
-print(p_value)
-print(t_stat)
+impute = SimpleImputer(strategy= "mean")
+df = pd.DataFrame({
+    "group":  ["A","A","A","A","A","B","B","B","B","B"],
+    "score":  [72, 68, 75, None, 70, 80, 78, 85, 79, 83],
+    "passed": ["yes","no","yes","yes","no","yes","yes","yes","yes","no"],
+})
+group_a = df[df['group'] == 'A']['score']
+group_b = df[df['group'] == 'B']['score']
+ct = pd.crosstab(df['group'],df['passed'])
+print(ct)
+chi2, p, dof, expected = stats.chi2_contingency(ct)
+print(p)
