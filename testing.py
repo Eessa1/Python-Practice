@@ -1,16 +1,20 @@
-from scipy import stats
 import pandas as pd
-from sklearn.impute import SimpleImputer
+import numpy as np
+from scipy import stats 
 
-impute = SimpleImputer(strategy= "mean")
 df = pd.DataFrame({
-    "group":  ["A","A","A","A","A","B","B","B","B","B"],
-    "score":  [72, 68, 75, None, 70, 80, 78, 85, 79, 83],
-    "passed": ["yes","no","yes","yes","no","yes","yes","yes","yes","no"],
+    "student": range(1, 13),
+    "course":  ["CS","CS","CS","CS","CS","CS","Maths","Maths","Maths","Maths","Maths","Maths"],
+    "hours_studied": [5, 8, 6, 10, 7, 9, 4, 6, 5, 8, 3, np.nan],
+    "mock_score":    [52, 68, 60, 79, 63, 75, 48, 58, 55, 70, 41, 50],
+    "final_score":   [58, 72, 63, 85, 66, 80, 49, 63, 54, 74, 45, 53],
+    "passed":        ["no","yes","yes","yes","yes","yes","no","yes","no","yes","no","no"],
 })
-group_a = df[df['group'] == 'A']['score']
-group_b = df[df['group'] == 'B']['score']
-ct = pd.crosstab(df['group'],df['passed'])
-print(ct)
-chi2, p, dof, expected = stats.chi2_contingency(ct)
-print(p)
+median = df['hours_studied'].median()
+df['hours_studied'] = df["hours_studied"].fillna(median)
+mathdf = df[df['course'] == 'Maths']
+CSdf = df[df['course'] == 'CS']
+contingent_table = pd.crosstab(df['course'],df['passed'])
+res = stats.chi2_contingency(contingent_table)
+print(res.statistic)
+print(res.pvalue)
