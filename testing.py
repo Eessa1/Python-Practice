@@ -1,11 +1,15 @@
-import pandas as pd
 import numpy as np
-from scipy import stats 
 
-df = pd.DataFrame({
-    "old":   [62, 70, 68, 75, 71, 66, 73, 69],
-    "new":   [74, 78, 72, 80, 77, 75, 79, 76],
-})
-res = stats.ttest_ind(df['old'],df['new'])
-print(res.statistic)
-print(res.pvalue)
+def cosine_simil(a,b):
+    dotproduct = np.dot(a,b)
+    alength = np.linalg.norm(a)
+    blength = np.linalg.norm(b)
+    magnitude = alength*blength
+    if magnitude == 0:
+        return "0 divison"
+    simil = dotproduct / magnitude
+    return simil
+
+helloworld =[1,1]
+hello =[1,0]
+print(cosine_simil(helloworld,hello))
