@@ -91,5 +91,3 @@ similarities = cluster_simil.fit_transform(housing[["latitude","longitude"]],sam
 forest_reg = make_pipeline(preprocessing,RandomForestRegressor(random_state=42))
 forest_rmse = -cross_val_score(forest_reg,housing,housing_labels,scoring="neg_root_mean_squared_error",cv=10)
 print(pd.Series(forest_rmse).describe())
-print("hi")
-##recoded
