@@ -1,9 +1,5 @@
-import pandas as pd 
-from scipy import stats
-import seaborn as sns
-import matplotlib.pyplot as plt
-
-df = sns.load_dataset("titanic")
-print(df.head())
-print(df.describe())
-print(df.corr)
+from sympy import *
+n = symbols('n')
+f = (1 + (1/n))**n
+result = limit(f, n, oo)
+print(result) # E
