@@ -1,5 +1,23 @@
 import numpy as np
 
+class VectorDB:
+    def __init__(self):
+        self.vectors = {}
+
+    def add(self,name,vector):
+        self.vectors[name] = vector
+
+    def search(self,query,k):
+        if k<0 or k >len(self.vectors):
+            raise ValueError("k is out of bounds")
+
+        scores = {}
+        for name,vector in self.vectors.items():
+            scores[name] = cosine_simil(vector,query)
+
+        ranked = sorted(scores.items(),key = lambda item: item[1], reverse = True)
+        return dict(ranked[:k])
+
 def cosine_simil(a,b):
     dotproduct = np.dot(a,b)
     alength = np.linalg.norm(a)
@@ -9,19 +27,10 @@ def cosine_simil(a,b):
         return 0
     simil = dotproduct / magnitude
     return simil
-def search(db,query,k):
-    valuesdict = {}
-    for name,vector in db.items():
-        similarity = cosine_simil(vector,query)
-        valuesdict[name] = similarity
-    if k > len(db) or k<0:
-        print("k is out of bounds")
-        return
-    highestkvalues = dict(sorted(valuesdict.items(), key=lambda item: item[1], reverse= True)[:k])
-    return highestkvalues
 
-helloworld =[1,1]
-hello =[1,0]
-##print(cosine_simil(helloworld,hello))
-namedict = {"Eessa": [1,1],"Jamie":[1,2],"Subhan":[2,2],"Zakki":[2,1]}
-print(search(namedict,[2,1],2))
+db = VectorDB()
+db.add("Eessa", [1,1])
+db.add("Jamie", [1,2])
+db.add("Subhan", [2,2])
+db.add("Zakki", [2,1])
+print(db.search([2,1],2))
